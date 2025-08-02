@@ -81,7 +81,7 @@ export function AdminListView({
 
   useEffect(() => {
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 1024) // Use lg breakpoint for better mobile experience
     }
 
     checkIsMobile()
@@ -239,161 +239,170 @@ export function AdminListView({
   }, [selectedAdmins])
 
   return (
-    <div className="flex-1 p-6">
+    <div className="flex-1 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Platform Admins Management</h1>
-          <p className="text-gray-600 mt-1">Manage platform administrators and their society assignments</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Platform Admins Management</h1>
+          <p className="text-gray-600 mt-1 text-sm sm:text-base">Manage platform administrators and their society assignments</p>
         </div>
         <Button
           onClick={onCreateAdmin}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4 mr-2" />
-          Create New Admin
+          <span className="hidden sm:inline">Create New Admin</span>
+          <span className="sm:hidden">Create Admin</span>
         </Button>
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">{activeCount}</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs sm:text-sm font-bold">{activeCount}</span>
               </div>
             </div>
-            <div className="ml-3">
-              <p className="text-sm text-gray-600">Active Admins</p>
-              <p className="text-lg font-semibold">{activeCount}</p>
+            <div className="ml-2 sm:ml-3 min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Active Admins</p>
+              <p className="text-sm sm:text-lg font-semibold">{activeCount}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-              <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">{inactiveCount}</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-red-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs sm:text-sm font-bold">{inactiveCount}</span>
               </div>
             </div>
-            <div className="ml-3">
-              <p className="text-sm text-gray-600">Inactive Admins</p>
-              <p className="text-lg font-semibold">{inactiveCount}</p>
+            <div className="ml-2 sm:ml-3 min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Inactive Admins</p>
+              <p className="text-sm sm:text-lg font-semibold">{inactiveCount}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">{pendingCount}</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs sm:text-sm font-bold">{pendingCount}</span>
               </div>
             </div>
-            <div className="ml-3">
-              <p className="text-sm text-gray-600">Pending Approval</p>
-              <p className="text-lg font-semibold">{pendingCount}</p>
+            <div className="ml-2 sm:ml-3 min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Pending Approval</p>
+              <p className="text-sm sm:text-lg font-semibold">{pendingCount}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-              <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">{totalAssignments}</span>
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-purple-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-xs sm:text-sm font-bold">{totalAssignments}</span>
               </div>
             </div>
-            <div className="ml-3">
-              <p className="text-sm text-gray-600">Total Assignments</p>
-              <p className="text-lg font-semibold">{totalAssignments}</p>
+            <div className="ml-2 sm:ml-3 min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Total Assignments</p>
+              <p className="text-sm sm:text-lg font-semibold">{totalAssignments}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white rounded-xl p-4 shadow-sm border mb-6">
-        <div className="flex flex-col md:flex-row gap-4">
+      <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search admins by name or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 text-sm sm:text-base"
             />
           </div>
-          <Select
-            value={statusFilter}
-            onValueChange={setStatusFilter}
-          >
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="All Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">
-                All Status
-              </SelectItem>
-              <SelectItem value="active">
-                Active
-              </SelectItem>
-              <SelectItem value="inactive">
-                Inactive
-              </SelectItem>
-              <SelectItem value="pending">
-                Pending
-              </SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline">
-            <Filter className="w-4 h-4 mr-2" />
-            More Filters
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <Select
+              value={statusFilter}
+              onValueChange={setStatusFilter}
+            >
+              <SelectTrigger className="w-full sm:w-40 lg:w-48">
+                <SelectValue placeholder="All Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">
+                  All Status
+                </SelectItem>
+                <SelectItem value="active">
+                  Active
+                </SelectItem>
+                <SelectItem value="inactive">
+                  Inactive
+                </SelectItem>
+                <SelectItem value="pending">
+                  Pending
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" className="w-full sm:w-auto">
+              <Filter className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">More Filters</span>
+              <span className="sm:hidden">Filters</span>
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* Bulk Actions Bar */}
       {showBulkActions && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="text-sm font-medium text-blue-900">
-              {selectedAdmins.length} admin{selectedAdmins.length > 1 ? "s" : ""} selected
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+            <div className="flex items-center">
+              <div className="text-sm font-medium text-blue-900">
+                {selectedAdmins.length} admin{selectedAdmins.length > 1 ? "s" : ""} selected
+              </div>
             </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleBulkToggleStatus("active")}
-              className="text-green-600 border-green-200 hover:bg-green-50"
-            >
-              Enable Selected
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleBulkToggleStatus("inactive")}
-              className="text-orange-600 border-orange-200 hover:bg-orange-50"
-            >
-              Disable Selected
-            </Button>
-            <Button variant="destructive" size="sm" onClick={handleBulkDelete} className="bg-red-600 hover:bg-red-700">
-              <Trash2 className="w-4 h-4 mr-2" />
-              Delete Selected
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setSelectedAdmins([])
-                setShowBulkActions(false)
-              }}
-            >
-              Cancel
-            </Button>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleBulkToggleStatus("active")}
+                className="text-green-600 border-green-200 hover:bg-green-50"
+              >
+                <span className="hidden sm:inline">Enable Selected</span>
+                <span className="sm:hidden">Enable</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleBulkToggleStatus("inactive")}
+                className="text-orange-600 border-orange-200 hover:bg-orange-50"
+              >
+                <span className="hidden sm:inline">Disable Selected</span>
+                <span className="sm:hidden">Disable</span>
+              </Button>
+              <Button variant="destructive" size="sm" onClick={handleBulkDelete} className="bg-red-600 hover:bg-red-700">
+                <Trash2 className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Delete Selected</span>
+                <span className="sm:hidden">Delete</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setSelectedAdmins([])
+                  setShowBulkActions(false)
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
         </div>
       )}
@@ -419,11 +428,11 @@ export function AdminListView({
         ) : (
           /* Desktop Table View */
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[800px]">
               {/* Keep existing table structure but with updated cells */}
               <thead className="bg-gray-50 border-b">
                 <tr>
-                  <th className="px-6 py-3 text-left">
+                  <th className="px-3 sm:px-6 py-3 text-left">
                     <Checkbox
                       checked={selectedAdmins.length === paginatedAdmins.length && paginatedAdmins.length > 0}
                       ref={(el) => {
@@ -436,37 +445,39 @@ export function AdminListView({
                       onCheckedChange={handleSelectAll}
                     />
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button onClick={() => handleSort("name")} className="flex items-center hover:text-gray-700">
                       Admin Details
                       <ChevronDown className="w-4 h-4 ml-1" />
                     </button>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button
                       onClick={() => handleSort("societyCount")}
                       className="flex items-center hover:text-gray-700"
                     >
-                      Assigned Societies
+                      <span className="hidden lg:inline">Assigned Societies</span>
+                      <span className="lg:hidden">Societies</span>
                       <ChevronDown className="w-4 h-4 ml-1" />
                     </button>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button
                       onClick={() => handleSort("lastActivity")}
                       className="flex items-center hover:text-gray-700"
                     >
-                      Last Activity
+                      <span className="hidden lg:inline">Last Activity</span>
+                      <span className="lg:hidden">Activity</span>
                       <ChevronDown className="w-4 h-4 ml-1" />
                     </button>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Performance
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -477,43 +488,42 @@ export function AdminListView({
                     key={admin.id}
                     className={`hover:bg-gray-50 transition-colors ${selectedAdmins.includes(admin.id) ? "bg-blue-50 border-l-4 border-l-blue-500" : ""}`}
                   >
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <Checkbox
                         checked={selectedAdmins.includes(admin.id)}
                         onCheckedChange={(checked) => handleSelectAdmin(admin.id, checked as boolean)}
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <div className="flex items-center">
-                        <Avatar className="w-10 h-10">
-                          <AvatarFallback className="bg-blue-100 text-blue-600 font-medium">
+                        <Avatar className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
+                          <AvatarFallback className="bg-blue-100 text-blue-600 font-medium text-xs sm:text-sm">
                             {getInitials(admin.name)}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="ml-3">
-                          <div className="text-sm font-medium text-gray-900">{admin.name}</div>
-                          <div className="text-sm text-gray-500">{admin.email}</div>
+                        <div className="ml-2 sm:ml-3 min-w-0">
+                          <div className="text-xs sm:text-sm font-medium text-gray-900 truncate">{admin.name}</div>
+                          <div className="text-xs sm:text-sm text-gray-500 truncate">{admin.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <div className="flex items-center">
                         <div className={`w-2 h-2 rounded-full mr-2 ${getStatusDot(admin.status)}`} />
-                        <Badge variant="outline" className={getStatusBadge(admin.status)}>
-                          {admin.status.charAt(0).toUpperCase() + admin.status.slice(1)}
+                        <Badge variant="outline" className={`${getStatusBadge(admin.status)} text-xs`}>
+                          <span className="hidden sm:inline">{admin.status.charAt(0).toUpperCase() + admin.status.slice(1)}</span>
+                          <span className="sm:hidden">{admin.status.charAt(0).toUpperCase()}</span>
                         </Badge>
                       </div>
                     </td>
-                    {/* Updated Assigned Societies cell with hover preview */}
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <div className="cursor-help">
-                              <div className="text-sm text-gray-900">{admin.assignedSocieties.length} societies</div>
-                              <div className="text-sm text-gray-500">
-                                {admin.assignedSocieties.reduce((sum, society) => sum + society.unitCount, 0)} total
-                                units
+                              <div className="text-xs sm:text-sm text-gray-900">{admin.assignedSocieties.length} societies</div>
+                              <div className="text-xs text-gray-500">
+                                {admin.assignedSocieties.reduce((sum, society) => sum + society.unitCount, 0)} <span className="hidden sm:inline">total</span> units
                               </div>
                             </div>
                           </TooltipTrigger>
@@ -536,18 +546,18 @@ export function AdminListView({
                       </TooltipProvider>
                     </td>
                     {/* Updated Last Activity cell with full timestamp on hover */}
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-6 py-4">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <div className="cursor-help">
-                              <div className="text-sm text-gray-900">
+                              <div className="text-xs sm:text-sm text-gray-900 truncate">
                                 {admin.lastActivity === "Never"
                                   ? "Never"
                                   : formatDistanceToNow(new Date(admin.lastActivity), { addSuffix: true })}
                               </div>
                               {admin.lastActivity !== "Never" && (
-                                <div className="text-sm text-gray-500">
+                                <div className="text-xs text-gray-500">
                                   {new Date(admin.lastActivity).toLocaleDateString()}
                                 </div>
                               )}
@@ -571,19 +581,19 @@ export function AdminListView({
                         </Tooltip>
                       </TooltipProvider>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">{admin.loginCount} logins</div>
-                      <div className="text-sm text-gray-500">{admin.ticketsResolved} tickets resolved</div>
+                    <td className="px-3 sm:px-6 py-4">
+                      <div className="text-xs sm:text-sm text-gray-900">{admin.loginCount} logins</div>
+                      <div className="text-xs text-gray-500">{admin.ticketsResolved} <span className="hidden sm:inline">tickets</span> resolved</div>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => onViewAdmin(admin)}>
-                          <Eye className="w-4 h-4" />
+                    <td className="px-3 sm:px-6 py-4">
+                      <div className="flex items-center space-x-1 sm:space-x-2">
+                        <Button variant="ghost" size="sm" onClick={() => onViewAdmin(admin)} className="p-1 sm:p-2">
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              <MoreHorizontal className="w-4 h-4" />
+                            <Button variant="ghost" size="sm" className="p-1 sm:p-2">
+                              <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
@@ -596,20 +606,17 @@ export function AdminListView({
                               Edit Admin
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => onToggleStatus(admin)}>
-                              {
-                                admin.status === "active" ?
-                                  <>
-                                      <ShieldBan className="w-4 h-4 mr-2" />
-                                      Disable
-                                    </>
-                                  :
-                                  (
-                                    <>
-                                      <ShieldCheck className="w-4 h-4 mr-2" />
-                                      Enable
-                                    </>
-                                  )
-                              }
+                              {admin.status === "active" ? (
+                                <>
+                                  <ShieldBan className="w-4 h-4 mr-2" />
+                                  Disable
+                                </>
+                              ) : (
+                                <>
+                                  <ShieldCheck className="w-4 h-4 mr-2" />
+                                  Enable
+                                </>
+                              )}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => onDeleteAdmin(admin.id)} className="text-red-600">
                               <Trash2 className="w-4 h-4 mr-2" />
@@ -628,22 +635,24 @@ export function AdminListView({
       </div>
 
       {/* Pagination */}
-      <div className="px-6 py-3 border-t bg-gray-50 flex items-center justify-between">
-        <div className="text-sm text-gray-700">
+      <div className="px-3 sm:px-6 py-3 border-t bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+        <div className="text-xs sm:text-sm text-gray-700 text-center sm:text-left">
           Showing {Math.min((currentPage - 1) * itemsPerPage + 1, filteredAndSortedAdmins.length)} to{" "}
           {Math.min(currentPage * itemsPerPage, filteredAndSortedAdmins.length)} of {filteredAndSortedAdmins.length}{" "}
           admins
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center justify-center space-x-1 sm:space-x-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
+            className="text-xs sm:text-sm px-2 sm:px-3"
           >
-            Previous
+            <span className="hidden sm:inline">Previous</span>
+            <span className="sm:hidden">Prev</span>
           </Button>
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+          {Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
             const page = i + 1
             return (
               <Button
@@ -651,19 +660,24 @@ export function AdminListView({
                 variant={currentPage === page ? "default" : "outline"}
                 size="sm"
                 onClick={() => setCurrentPage(page)}
-                className={currentPage === page ? "bg-blue-600" : ""}
+                className={`text-xs sm:text-sm px-2 sm:px-3 ${currentPage === page ? "bg-blue-600" : ""}`}
               >
                 {page}
               </Button>
             )
           })}
+          {totalPages > 3 && (
+            <span className="text-xs sm:text-sm text-gray-500 px-1">...</span>
+          )}
           <Button
             variant="outline"
             size="sm"
             onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
+            className="text-xs sm:text-sm px-2 sm:px-3"
           >
-            Next
+            <span className="hidden sm:inline">Next</span>
+            <span className="sm:hidden">Next</span>
           </Button>
         </div>
       </div>

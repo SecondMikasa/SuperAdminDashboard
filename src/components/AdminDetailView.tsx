@@ -1,10 +1,12 @@
 import {
-   ArrowLeft,
+  ArrowLeft,
   Edit,
   UserX,
   Phone,
   Calendar,
   Clock,
+  ShieldBan,
+  ShieldCheck,
   TrendingUp,
   CheckCircle,
   Building2,
@@ -74,140 +76,173 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
   }
 
   return (
-    <div className="flex-1 p-6">
+    <div className="flex-1 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center">
-          <Button variant="ghost" onClick={onBack} className="mr-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
+        <div className="flex flex-col sm:flex-row sm:items-center">
+          <Button variant="ghost" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Platform Admin Details</h1>
-            <p className="text-gray-600 mt-1">Comprehensive view of admin profile and activities</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Platform Admin Details</h1>
+            <p className="text-gray-600 mt-1 text-sm sm:text-base">Comprehensive view of admin profile and activities</p>
           </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button onClick={() => onEdit(admin)} className="bg-blue-600 hover:bg-blue-700">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+          <Button onClick={() => onEdit(admin)} className="bg-blue-600 hover:bg-blue-700 text-sm sm:text-base">
             <Edit className="w-4 h-4 mr-2" />
-            Edit Admin
+            <span className="hidden sm:inline">Edit Admin</span>
+            <span className="sm:hidden">Edit</span>
           </Button>
-          <Button variant="destructive" onClick={() => onToggleStatus(admin)} className="bg-red-600 hover:bg-red-700">
+          <Button variant="destructive" onClick={() => onToggleStatus(admin)} className="bg-red-600 hover:bg-red-700 text-sm sm:text-base">
             <UserX className="w-4 h-4 mr-2" />
-            {admin.status === "active" ? "Disable" : "Enable"}
+            <span className="hidden sm:inline">
+              {
+                admin.status === "active" ?
+                  <>
+                    <ShieldBan className="w-4 h-4 mr-2" />
+                    Disable
+                  </>
+                  :
+                  (
+                    <>
+                      <ShieldCheck className="w-4 h-4 mr-2" />
+                      Enable
+                    </>
+                  )
+              }
+            </span>
+            <span className="sm:hidden">
+              {
+                admin.status === "active" ?
+                  <>
+                    <ShieldBan className="w-4 h-4 mr-2" />
+                    Disable
+                  </>
+                  :
+                  (
+                    <>
+                      <ShieldCheck className="w-4 h-4 mr-2" />
+                      Enable
+                    </>
+                  )
+              }
+            </span>
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Profile Section */}
         <div className="lg:col-span-1">
           <Card>
-            <CardContent className="p-6 text-center">
-              <Avatar className="w-24 h-24 mx-auto mb-4">
-                <AvatarFallback className="bg-blue-100 text-blue-600 text-2xl font-bold">
+            <CardContent className="p-4 sm:p-6 text-center">
+              <Avatar className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-4">
+                <AvatarFallback className="bg-blue-100 text-blue-600 text-lg sm:text-xl lg:text-2xl font-bold">
                   {getInitials(admin.name)}
                 </AvatarFallback>
               </Avatar>
-              <h2 className="text-xl font-bold text-gray-900 mb-1">{admin.name}</h2>
-              <p className="text-gray-600 mb-3">{admin.email}</p>
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">{admin.name}</h2>
+              <p className="text-gray-600 mb-3 text-sm sm:text-base break-all">{admin.email}</p>
               <Badge variant="outline" className={getStatusBadge(admin.status)}>
                 {admin.status.charAt(0).toUpperCase() + admin.status.slice(1)}
               </Badge>
 
-              <div className="mt-6 space-y-3 text-left">
+              <div className="mt-4 sm:mt-6 space-y-3 text-left">
                 <div className="flex items-center text-sm text-gray-600">
-                  <Phone className="w-4 h-4 mr-3" />
-                  {admin.phone}
+                  <Phone className="w-4 h-4 mr-3 flex-shrink-0" />
+                  <span className="break-all">{admin.phone}</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
-                  <Calendar className="w-4 h-4 mr-3" />
-                  Joined {format(new Date(admin.createdAt), "MMM dd, yyyy")}
+                  <Calendar className="w-4 h-4 mr-3 flex-shrink-0" />
+                  <span>Joined {format(new Date(admin.createdAt), "MMM dd, yyyy")}</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
-                  <Clock className="w-4 h-4 mr-3" />
-                  Last active{" "}
-                  {admin.lastActivity === "Never" ? "Never" : format(new Date(admin.lastActivity), "MMM dd, yyyy")}
+                  <Clock className="w-4 h-4 mr-3 flex-shrink-0" />
+                  <span>Last active{" "}
+                    {admin.lastActivity === "Never" ? "Never" : format(new Date(admin.lastActivity), "MMM dd, yyyy")}</span>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Performance Metrics */}
-          <Card className="mt-6">
+          <Card className="mt-4 sm:mt-6">
             <CardHeader>
-              <CardTitle className="text-lg">Performance Metrics</CardTitle>
+              <CardTitle className="text-base sm:text-lg">Performance Metrics</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-green-600" />
+            <CardContent className="space-y-3 sm:space-y-4">
+              <div className="flex items-center justify-between p-2 sm:p-3 bg-green-50 rounded-lg">
+                <div className="flex items-center min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-gray-600">Total Logins</p>
-                    <p className="text-sm text-gray-500">All time</p>
+                  <div className="ml-2 sm:ml-3 min-w-0">
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium">Total Logins</p>
+                    <p className="text-xs text-gray-500">All time</p>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-green-600">{admin.loginCount}</div>
+                <div className="text-lg sm:text-2xl font-bold text-green-600 flex-shrink-0">{admin.loginCount}</div>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center justify-between p-2 sm:p-3 bg-blue-50 rounded-lg">
+                <div className="flex items-center min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-gray-600">Tickets Resolved</p>
-                    <p className="text-sm text-gray-500">This month</p>
+                  <div className="ml-2 sm:ml-3 min-w-0">
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium">Tickets Resolved</p>
+                    <p className="text-xs text-gray-500">This month</p>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-blue-600">{admin.ticketsResolved}</div>
+                <div className="text-lg sm:text-2xl font-bold text-blue-600 flex-shrink-0">{admin.ticketsResolved}</div>
               </div>
 
-              <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-purple-600" />
+              <div className="flex items-center justify-between p-2 sm:p-3 bg-purple-50 rounded-lg">
+                <div className="flex items-center min-w-0 flex-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-gray-600">Societies Managed</p>
-                    <p className="text-sm text-gray-500">Currently assigned</p>
+                  <div className="ml-2 sm:ml-3 min-w-0">
+                    <p className="text-xs sm:text-sm text-gray-600 font-medium">Societies Managed</p>
+                    <p className="text-xs text-gray-500">Currently assigned</p>
                   </div>
                 </div>
-                <div className="text-2xl font-bold text-purple-600">{admin.assignedSocieties.length}</div>
+                <div className="text-lg sm:text-2xl font-bold text-purple-600 flex-shrink-0">{admin.assignedSocieties.length}</div>
               </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Assigned Societies */}
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-lg">Assigned Societies</CardTitle>
-              <Button variant="outline" size="sm">
-                Manage Assignments
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+              <CardTitle className="text-base sm:text-lg">Assigned Societies</CardTitle>
+              <Button variant="outline" size="sm" className="self-start sm:self-auto">
+                <span className="hidden sm:inline">Manage Assignments</span>
+                <span className="sm:hidden">Manage</span>
               </Button>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {admin.assignedSocieties.map((society) => (
-                  <div key={society.id} className="p-4 border rounded-lg hover:shadow-md transition-shadow">
+                  <div key={society.id} className="p-3 sm:p-4 border rounded-lg hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <Building2 className="w-5 h-5 text-blue-600" />
+                      <div className="flex items-center min-w-0 flex-1">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                         </div>
-                        <div className="ml-3">
-                          <h3 className="font-medium text-gray-900">{society.name}</h3>
-                          <p className="text-sm text-gray-500">{society.unitCount} units</p>
+                        <div className="ml-2 sm:ml-3 min-w-0">
+                          <h3 className="font-medium text-gray-900 text-sm sm:text-base truncate">{society.name}</h3>
+                          <p className="text-xs sm:text-sm text-gray-500">{society.unitCount} units</p>
                         </div>
                       </div>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="flex-shrink-0">
                             <MoreHorizontal className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -225,20 +260,21 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
 
           {/* Recent Activities */}
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-lg">Recent Activities</CardTitle>
-              <Button variant="outline" size="sm">
-                View All Activities
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+              <CardTitle className="text-base sm:text-lg">Recent Activities</CardTitle>
+              <Button variant="outline" size="sm" className="self-start sm:self-auto">
+                <span className="hidden sm:inline">View All Activities</span>
+                <span className="sm:hidden">View All</span>
               </Button>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {admin.recentActivities.map((activity) => (
-                  <div key={activity.id} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg">
+                  <div key={activity.id} className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 hover:bg-gray-50 rounded-lg">
                     <div className="flex-shrink-0 mt-1">{getActivityIcon(activity.type)}</div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900">{activity.action}</p>
-                      <p className="text-sm text-gray-500">{activity.society}</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900 break-words">{activity.action}</p>
+                      <p className="text-xs sm:text-sm text-gray-500 truncate">{activity.society}</p>
                       <p className="text-xs text-gray-400 mt-1">
                         {format(new Date(activity.timestamp), "MMM dd, yyyy")}
                       </p>
@@ -246,8 +282,8 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
                   </div>
                 ))}
                 {admin.recentActivities.length === 0 && (
-                  <div className="text-center py-8 text-gray-500">
-                    <p>No recent activities found</p>
+                  <div className="text-center py-6 sm:py-8 text-gray-500">
+                    <p className="text-sm sm:text-base">No recent activities found</p>
                   </div>
                 )}
               </div>
