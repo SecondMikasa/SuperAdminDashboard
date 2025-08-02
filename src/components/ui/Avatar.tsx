@@ -25,7 +25,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={cn(
-        'inline-flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white font-medium',
+        'inline-flex items-center justify-center rounded-full bg-gradient-to-br from-[#007AFF] to-[#6366F1] text-white font-medium shadow-lg',
         sizeClasses[size],
         className
       )}

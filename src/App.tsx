@@ -58,7 +58,6 @@ function App() {
         (
           <AdminListView
             onViewAdmin={handleViewAdmin}
-            onEditAdmin={handleEditAdmin}
             onCreateAdmin={handleCreateAdmin}
           />
         )

@@ -41,22 +41,22 @@ export const AdminDetailView: React.FC<AdminDetailViewProps> = ({
   const getActivityIcon = (type: string) => {
     switch (type) {
       case 'approval':
-        return <CheckCircle2 className="w-4 h-4 text-green-500" />;
+        return <CheckCircle2 className="w-4 h-4 text-[#10B981]" />;
       case 'update':
-        return <Edit className="w-4 h-4 text-blue-500" />;
+        return <Edit className="w-4 h-4 text-[#007AFF]" />;
       case 'resolution':
-        return <CheckCircle2 className="w-4 h-4 text-purple-500" />;
+        return <CheckCircle2 className="w-4 h-4 text-[#6366F1]" />;
       case 'creation':
-        return <Building2 className="w-4 h-4 text-orange-500" />;
+        return <Building2 className="w-4 h-4 text-[#F59E0B]" />;
       case 'assignment':
-        return <Users className="w-4 h-4 text-indigo-500" />;
+        return <Users className="w-4 h-4 text-[#6366F1]" />;
       default:
         return <Activity className="w-4 h-4 text-gray-500" />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
@@ -115,37 +115,37 @@ export const AdminDetailView: React.FC<AdminDetailViewProps> = ({
             <Card className="p-6 mt-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Metrics</h3>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-green-50 rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-[#10B981]/10 to-[#10B981]/20 rounded-xl border border-[#10B981]/20">
                   <div className="flex items-center">
-                    <TrendingUp className="w-5 h-5 text-green-500 mr-3" />
+                    <TrendingUp className="w-5 h-5 text-[#10B981] mr-3" />
                     <div>
                       <div className="text-sm text-gray-600">Total Logins</div>
                       <div className="text-sm text-gray-500">All time</div>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-green-600">{admin.loginCount}</div>
+                  <div className="text-2xl font-bold text-[#10B981]">{admin.loginCount}</div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-[#007AFF]/10 to-[#007AFF]/20 rounded-xl border border-[#007AFF]/20">
                   <div className="flex items-center">
-                    <CheckCircle2 className="w-5 h-5 text-blue-500 mr-3" />
+                    <CheckCircle2 className="w-5 h-5 text-[#007AFF] mr-3" />
                     <div>
                       <div className="text-sm text-gray-600">Tickets Resolved</div>
                       <div className="text-sm text-gray-500">This month</div>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-blue-600">{admin.ticketsResolved}</div>
+                  <div className="text-2xl font-bold text-[#007AFF]">{admin.ticketsResolved}</div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 bg-purple-50 rounded-xl">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-[#6366F1]/10 to-[#6366F1]/20 rounded-xl border border-[#6366F1]/20">
                   <div className="flex items-center">
-                    <Building2 className="w-5 h-5 text-purple-500 mr-3" />
+                    <Building2 className="w-5 h-5 text-[#6366F1] mr-3" />
                     <div>
                       <div className="text-sm text-gray-600">Societies Managed</div>
                       <div className="text-sm text-gray-500">Currently assigned</div>
                     </div>
                   </div>
-                  <div className="text-2xl font-bold text-purple-600">{admin.assignedSocieties.length}</div>
+                  <div className="text-2xl font-bold text-[#6366F1]">{admin.assignedSocieties.length}</div>
                 </div>
               </div>
             </Card>
@@ -165,11 +165,11 @@ export const AdminDetailView: React.FC<AdminDetailViewProps> = ({
               {admin.assignedSocieties.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {admin.assignedSocieties.map((society) => (
-                    <div key={society.id} className="p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                    <div key={society.id} className="p-4 backdrop-blur-xl bg-white/50 rounded-xl hover:bg-white/70 transition-colors border border-white/30">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                            <Building2 className="w-5 h-5 text-blue-600" />
+                          <div className="p-2 bg-gradient-to-r from-[#007AFF] to-[#6366F1] rounded-lg mr-3 shadow-lg">
+                            <Building2 className="w-5 h-5 text-white" />
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">{society.name}</div>
@@ -203,7 +203,7 @@ export const AdminDetailView: React.FC<AdminDetailViewProps> = ({
               {admin.recentActivities.length > 0 ? (
                 <div className="space-y-4">
                   {admin.recentActivities.map((activity) => (
-                    <div key={activity.id} className="flex items-start p-4 bg-gray-50 rounded-xl">
+                    <div key={activity.id} className="flex items-start p-4 backdrop-blur-xl bg-white/50 rounded-xl border border-white/30">
                       <div className="flex-shrink-0 mr-4 mt-1">
                         {getActivityIcon(activity.type)}
                       </div>

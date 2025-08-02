@@ -3,10 +3,8 @@ import React, { useState, useMemo } from 'react';
 import {
   Search,
   Filter,
-  MoreHorizontal,
+  EllipsisVertical,
   Eye,
-  Edit,
-  Power,
   Users,
   Building2,
   Activity,
@@ -31,13 +29,11 @@ import { Card } from './ui/Card';
 
 interface AdminListViewProps {
   onViewAdmin: (admin: Admin) => void;
-  onEditAdmin: (admin: Admin) => void;
   onCreateAdmin: () => void;
 }
 
 export const AdminListView: React.FC<AdminListViewProps> = ({
   onViewAdmin,
-  onEditAdmin,
   onCreateAdmin
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -48,12 +44,12 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
   const [selectedAdmins, setSelectedAdmins] = useState<number[]>([]);
   const [showFilters, setShowFilters] = useState(false);
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 8;
 
   const filteredAndSortedData = useMemo(() => {
     let filtered = mockAdmins.filter(admin => {
       const matchesSearch = admin.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           admin.email.toLowerCase().includes(searchQuery.toLowerCase());
+        admin.email.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus = statusFilter === 'all' || admin.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
@@ -136,11 +132,11 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
   const statusCounts = getStatusCounts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <Card className="p-6 mb-8">
+          <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Platform Admins Management</h1>
               <p className="text-gray-600 mt-1">Manage platform administrators and their society assignments</p>
@@ -150,12 +146,15 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
               Create New Admin
             </Button>
           </div>
+        </Card>
+
+        <div className="mb-8">
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100">
+            <Card className="p-6 bg-gradient-to-br from-[#10B981]/10 to-[#10B981]/20 border-[#10B981]/20">
               <div className="flex items-center">
-                <div className="p-3 bg-green-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-r from-[#10B981] to-[#059669] rounded-xl shadow-lg">
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <div className="ml-4">
@@ -165,10 +164,10 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
               </div>
             </Card>
 
-            <Card className="p-6 bg-gradient-to-br from-red-50 to-red-100">
+            <Card className="p-6 bg-gradient-to-br from-[#EF4444]/10 to-[#EF4444]/20 border-[#EF4444]/20">
               <div className="flex items-center">
-                <div className="p-3 bg-red-500 rounded-xl">
-                  <Power className="w-6 h-6 text-white" />
+                <div className="p-3 bg-gradient-to-r from-[#EF4444] to-[#DC2626] rounded-xl shadow-lg">
+                  <Activity className="w-6 h-6 text-white" />
                 </div>
                 <div className="ml-4">
                   <div className="text-2xl font-bold text-gray-900">{statusCounts.inactive}</div>
@@ -177,9 +176,9 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
               </div>
             </Card>
 
-            <Card className="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100">
+            <Card className="p-6 bg-gradient-to-br from-[#F59E0B]/10 to-[#F59E0B]/20 border-[#F59E0B]/20">
               <div className="flex items-center">
-                <div className="p-3 bg-yellow-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-r from-[#F59E0B] to-[#D97706] rounded-xl shadow-lg">
                   <Activity className="w-6 h-6 text-white" />
                 </div>
                 <div className="ml-4">
@@ -189,9 +188,9 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
               </div>
             </Card>
 
-            <Card className="p-6 bg-gradient-to-br from-purple-50 to-purple-100">
+            <Card className="p-6 bg-gradient-to-br from-[#6366F1]/10 to-[#6366F1]/20 border-[#6366F1]/20">
               <div className="flex items-center">
-                <div className="p-3 bg-purple-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-r from-[#6366F1] to-[#4F46E5] rounded-xl shadow-lg">
                   <Building2 className="w-6 h-6 text-white" />
                 </div>
                 <div className="ml-4">
@@ -213,14 +212,14 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
                 placeholder="Search admins by name or email..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 backdrop-blur-xl bg-white/80 border border-white/30 rounded-xl focus:ring-2 focus:ring-[#007AFF] focus:border-transparent shadow-lg"
               />
             </div>
-            
+
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-              className="px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-2.5 backdrop-blur-xl bg-white/80 border border-white/30 rounded-xl focus:ring-2 focus:ring-[#007AFF] focus:border-transparent shadow-lg"
             >
               <option value="all">All Status</option>
               <option value="active">Active</option>
@@ -265,26 +264,26 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                   </th>
-                  <th 
+                  <th
                     className="p-4 text-left text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900"
                     onClick={() => handleSort('name')}
                   >
                     Admin Details
                   </th>
                   <th className="p-4 text-left text-sm font-medium text-gray-700">Status</th>
-                  <th 
+                  <th
                     className="p-4 text-left text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900"
                     onClick={() => handleSort('societyCount')}
                   >
                     Assigned Societies
                   </th>
-                  <th 
+                  <th
                     className="p-4 text-left text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900"
                     onClick={() => handleSort('lastActivity')}
                   >
                     Last Activity
                   </th>
-                  <th 
+                  <th
                     className="p-4 text-left text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900"
                     onClick={() => handleSort('loginCount')}
                   >
@@ -347,22 +346,18 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
                     <td className="p-4">
                       <div className="flex items-center gap-2">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="sm"
                           onClick={() => onViewAdmin(admin)}
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-4 h-4 mr-1" />
+                          View
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onEditAdmin(admin)}
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
+                        <div className="relative">
+                          <Button variant="ghost" size="sm">
+                            <EllipsisVertical className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -388,7 +383,7 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
                   {admin.status.charAt(0).toUpperCase() + admin.status.slice(1)}
                 </Badge>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <div className="text-gray-600">Societies</div>
@@ -413,9 +408,8 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
                   <Eye className="w-4 h-4 mr-1" />
                   View
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => onEditAdmin(admin)}>
-                  <Edit className="w-4 h-4 mr-1" />
-                  Edit
+                <Button variant="ghost" size="sm">
+                  <EllipsisVertical className="w-4 h-4" />
                 </Button>
               </div>
             </Card>
@@ -438,7 +432,7 @@ export const AdminListView: React.FC<AdminListViewProps> = ({
                 >
                   Previous
                 </Button>
-                
+
                 <div className="flex gap-1">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                     <Button
