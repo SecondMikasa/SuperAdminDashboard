@@ -10,7 +10,11 @@ import {
   MoreHorizontal,
   ShieldCheck,
   ShieldBan,
-  ChevronDown
+  ChevronDown,
+  Users,
+  Power,
+  Activity,
+  Building2
 } from "lucide-react"
 
 import { Button } from "./ui/Button"
@@ -40,6 +44,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "../components/ui/Tooltip"
+import { Card } from "./ui/Card"
 
 import { CardView } from "./modules/Card-view"
 import { BulkEditModal } from "./modules/Bulk-edit"
@@ -257,62 +262,55 @@ export function AdminListView({
       </div>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
-        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100">
           <div className="flex items-center">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs sm:text-sm font-bold">{activeCount}</span>
-              </div>
+            <div className="p-3 bg-green-500 rounded-xl">
+              <Users className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-2 sm:ml-3 min-w-0">
-              <p className="text-xs sm:text-sm text-gray-600">Active Admins</p>
-              <p className="text-sm sm:text-lg font-semibold">{activeCount}</p>
+            <div className="ml-4">
+              <div className="text-2xl font-bold text-gray-900">{activeCount}</div>
+              <div className="text-sm text-gray-600">Active Admins</div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
+        <Card className="p-6 bg-gradient-to-br from-red-50 to-red-100">
           <div className="flex items-center">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-red-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs sm:text-sm font-bold">{inactiveCount}</span>
-              </div>
+            <div className="p-3 bg-red-500 rounded-xl">
+              <Power className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-2 sm:ml-3 min-w-0">
-              <p className="text-xs sm:text-sm text-gray-600">Inactive Admins</p>
-              <p className="text-sm sm:text-lg font-semibold">{inactiveCount}</p>
+            <div className="ml-4">
+              <div className="text-2xl font-bold text-gray-900">{inactiveCount}</div>
+              <div className="text-sm text-gray-600">Inactive Admins</div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
+        <Card className="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100">
           <div className="flex items-center">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-orange-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs sm:text-sm font-bold">{pendingCount}</span>
-              </div>
+            <div className="p-3 bg-yellow-500 rounded-xl">
+              <Activity className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-2 sm:ml-3 min-w-0">
-              <p className="text-xs sm:text-sm text-gray-600">Pending Approval</p>
-              <p className="text-sm sm:text-lg font-semibold">{pendingCount}</p>
+            <div className="ml-4">
+              <div className="text-2xl font-bold text-gray-900">{pendingCount}</div>
+              <div className="text-sm text-gray-600">Pending Approval</div>
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm border">
+        <Card className="p-6 bg-gradient-to-br from-purple-50 to-purple-100">
           <div className="flex items-center">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <div className="w-5 h-5 sm:w-6 sm:h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-xs sm:text-sm font-bold">{totalAssignments}</span>
-              </div>
+            <div className="p-3 bg-purple-500 rounded-xl">
+              <Building2 className="w-6 h-6 text-white" />
             </div>
-            <div className="ml-2 sm:ml-3 min-w-0">
-              <p className="text-xs sm:text-sm text-gray-600">Total Assignments</p>
-              <p className="text-sm sm:text-lg font-semibold">{totalAssignments}</p>
+            <div className="ml-4">
+              <div className="text-2xl font-bold text-gray-900">{totalAssignments}</div>
+              <div className="text-sm text-gray-600">Total Assignments</div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* Search and Filters */}

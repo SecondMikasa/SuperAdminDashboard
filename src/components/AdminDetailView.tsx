@@ -5,8 +5,6 @@ import {
   Phone,
   Calendar,
   Clock,
-  ShieldBan,
-  ShieldCheck,
   TrendingUp,
   CheckCircle,
   Building2,
@@ -82,7 +80,6 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
         <div className="flex flex-col sm:flex-row sm:items-center">
           <Button variant="ghost" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
           </Button>
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Platform Admin Details</h1>
@@ -98,36 +95,10 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
           <Button variant="destructive" onClick={() => onToggleStatus(admin)} className="bg-red-600 hover:bg-red-700 text-sm sm:text-base">
             <UserX className="w-4 h-4 mr-2" />
             <span className="hidden sm:inline">
-              {
-                admin.status === "active" ?
-                  <>
-                    <ShieldBan className="w-4 h-4 mr-2" />
-                    Disable
-                  </>
-                  :
-                  (
-                    <>
-                      <ShieldCheck className="w-4 h-4 mr-2" />
-                      Enable
-                    </>
-                  )
-              }
+            { admin.status === "active" ? "Disable" : "Enable" }
             </span>
             <span className="sm:hidden">
-              {
-                admin.status === "active" ?
-                  <>
-                    <ShieldBan className="w-4 h-4 mr-2" />
-                    Disable
-                  </>
-                  :
-                  (
-                    <>
-                      <ShieldCheck className="w-4 h-4 mr-2" />
-                      Enable
-                    </>
-                  )
-              }
+              { admin.status === "active" ? "Disable" : "Enable" }
             </span>
           </Button>
         </div>

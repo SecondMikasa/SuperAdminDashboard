@@ -1,7 +1,7 @@
 import type React from "react"
-
 import { useState, useEffect } from "react"
-import { X } from "lucide-react"
+import { X, Search } from "lucide-react"
+
 import { Button } from "../ui/Button"
 import { Input } from "../ui/Input"
 import { Label } from "../ui/Label"
@@ -10,10 +10,11 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "../ui/Select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/Dialog"
 import { Badge } from "../ui/Badge"
+
 import { mockSocieties } from "../../data/mockData"
 import { type Admin } from "../../types/admin"
 
@@ -25,7 +26,13 @@ interface CreateEditAdminModalProps {
   isEditing: boolean
 }
 
-export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: CreateEditAdminModalProps) {
+export function EditAdminModal({
+  isOpen,
+  onClose,
+  onSave,
+  admin,
+  isEditing,
+}: CreateEditAdminModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,6 +42,7 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [societySearch, setSocietySearch] = useState("")
 
   useEffect(() => {
     if (admin && isEditing) {
@@ -55,6 +63,7 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
       })
     }
     setErrors({})
+    setSocietySearch("")
   }, [admin, isEditing, isOpen])
 
   const validateForm = () => {
@@ -90,12 +99,16 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
   }
 
   const handleSocietyToggle = (society: (typeof mockSocieties)[0]) => {
-    const isAssigned = formData.assignedSocieties.some((s) => s.id === society.id)
+    const isAssigned = formData.assignedSocieties.some(
+      (s) => s.id === society.id
+    )
 
     if (isAssigned) {
       setFormData((prev) => ({
         ...prev,
-        assignedSocieties: prev.assignedSocieties.filter((s) => s.id !== society.id),
+        assignedSocieties: prev.assignedSocieties.filter(
+          (s) => s.id !== society.id
+        ),
       }))
     } else {
       setFormData((prev) => ({
@@ -105,11 +118,17 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
     }
   }
 
+  const filteredSocieties = mockSocieties.filter((society) =>
+    society.name.toLowerCase().includes(societySearch.toLowerCase())
+  )
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Admin" : "Create New Admin"}</DialogTitle>
+          <DialogTitle>
+            {isEditing ? "Edit Admin" : "Create New Admin"}
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -123,10 +142,14 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
                 <Input
                   id="name"
                   value={formData.name}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, name: e.target.value }))
+                  }
                   className={errors.name ? "border-red-500" : ""}
                 />
-                {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
+                {errors.name && (
+                  <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+                )}
               </div>
 
               <div>
@@ -135,10 +158,14 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  }
                   className={errors.email ? "border-red-500" : ""}
                 />
-                {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+                )}
               </div>
             </div>
 
@@ -148,18 +175,24 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
                 <Input
                   id="phone"
                   value={formData.phone}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, phone: e.target.value }))
+                  }
                   placeholder="+1 (555) 123-4567"
                   className={errors.phone ? "border-red-500" : ""}
                 />
-                {errors.phone && <p className="text-sm text-red-500 mt-1">{errors.phone}</p>}
+                {errors.phone && (
+                  <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+                )}
               </div>
 
               <div>
                 <Label htmlFor="status">Initial Status</Label>
                 <Select
                   value={formData.status}
-                  onValueChange={(value: Admin["status"]) => setFormData((prev) => ({ ...prev, status: value }))}
+                  onValueChange={(value: Admin["status"]) =>
+                    setFormData((prev) => ({ ...prev, status: value }))
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -179,41 +212,73 @@ export function EditAdminModal({ isOpen, onClose, onSave, admin, isEditing }: Cr
             <h3 className="text-lg font-medium">Society Assignments</h3>
 
             <div className="space-y-3">
-              <Label>Available Societies</Label>
+              <div>
+                <Label>Available Societies</Label>
+                <div className="relative mt-2">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input
+                    placeholder="Search societies..."
+                    value={societySearch}
+                    onChange={(e) => setSocietySearch(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
               <div className="max-h-48 overflow-y-auto border rounded-lg p-3 space-y-2">
-                {mockSocieties.map((society) => {
-                  const isAssigned = formData.assignedSocieties.some((s) => s.id === society.id)
-                  return (
-                    <div
-                      key={society.id}
-                      className={`p-3 rounded-lg border cursor-pointer transition-colors ${
-                        isAssigned ? "bg-blue-50 border-blue-200" : "hover:bg-gray-50"
-                      }`}
-                      onClick={() => handleSocietyToggle(society)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-medium">{society.name}</h4>
-                          <p className="text-sm text-gray-500">{society.unitCount} units</p>
+                {filteredSocieties.length === 0 ? (
+                  <div className="text-center py-4 text-gray-500">
+                    {societySearch ? "No societies found matching your search" : "No societies available"}
+                  </div>
+                ) : (
+                  filteredSocieties.map((society) => {
+                    const isAssigned = formData.assignedSocieties.some(
+                      (s) => s.id === society.id
+                    )
+
+                    return (
+                      <div
+                        key={society.id}
+                        className={`p-3 rounded-lg border cursor-pointer transition-colors ${isAssigned
+                          ? "bg-blue-50 border-blue-200"
+                          : "hover:bg-gray-50"
+                          }`}
+                        onClick={() => handleSocietyToggle(society)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-medium">{society.name}</h4>
+                            <p className="text-sm text-gray-500">
+                              {society.unitCount} units
+                            </p>
+                          </div>
+                          {isAssigned && (
+                            <Badge
+                              variant="secondary"
+                              className="bg-blue-100 text-blue-800"
+                            >
+                              Assigned
+                            </Badge>
+                          )}
                         </div>
-                        {isAssigned && (
-                          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                            Assigned
-                          </Badge>
-                        )}
                       </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })
+                )}
               </div>
             </div>
 
             {formData.assignedSocieties.length > 0 && (
               <div>
-                <Label>Selected Societies ({formData.assignedSocieties.length})</Label>
+                <Label>
+                  Selected Societies ({formData.assignedSocieties.length})
+                </Label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.assignedSocieties.map((society) => (
-                    <Badge key={society.id} variant="secondary" className="bg-blue-100 text-blue-800">
+                    <Badge
+                      key={society.id}
+                      variant="secondary"
+                      className="bg-blue-100 text-blue-800"
+                    >
                       {society.name}
                       <button
                         type="button"
