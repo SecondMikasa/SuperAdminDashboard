@@ -26,7 +26,3 @@ export interface Admin {
   recentActivities: Activity[];
   avatar?: string;
 }
-
-export type SortField = 'name' | 'lastActivity' | 'societyCount' | 'loginCount' | 'ticketsResolved';
-export type SortDirection = 'asc' | 'desc';
-export type StatusFilter = 'all' | 'active' | 'inactive' | 'pending';

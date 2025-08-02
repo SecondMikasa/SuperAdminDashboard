@@ -1,87 +1,132 @@
-import { useState } from 'react';
+import { useState } from "react"
 
-import type { Admin } from './types/admin';
+import { AdminListView } from "../src/components/AdminListView"
+import { AdminDetailView } from "../src/components/AdminDetailView"
 
-import { AdminListView } from './components/AdminListView';
-import { AdminDetailView } from './components/AdminDetailView';
-import { AdminModal } from './components/AdminModal';
+import { EditAdminModal } from "../src/components/modules/Edit-modal"
 
-type View = 'list' | 'detail';
+import { Toast, useToast } from "../src/components/ui/Toast-notification"
 
-function App() {
-  const [currentView, setCurrentView] = useState<View>('list');
-  const [selectedAdmin, setSelectedAdmin] = useState<Admin | undefined>(undefined);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingAdmin, setEditingAdmin] = useState<Admin | undefined>(undefined);
+import { mockAdmins } from "../src/data/mockData"
+
+import { type Admin } from "../src/types/admin"
+
+export default function PlatformAdminDashboard() {
+  const [selectedAdmin, setSelectedAdmin] = useState<Admin | null>(null)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null)
+  const [admins, setAdmins] = useState<Admin[]>(mockAdmins)
+  const { toast, showToast, hideToast } = useToast()
 
   const handleViewAdmin = (admin: Admin) => {
-    setSelectedAdmin(admin);
-    setCurrentView('detail');
-  };
+    setSelectedAdmin(admin)
+  }
 
   const handleBackToList = () => {
-    setCurrentView('list');
-    setSelectedAdmin(undefined);
-  };
-
-  const handleEditAdmin = (admin: Admin) => {
-    setEditingAdmin(admin);
-    setIsModalOpen(true);
-  };
+    setSelectedAdmin(null)
+  }
 
   const handleCreateAdmin = () => {
-    setEditingAdmin(undefined);
-    setIsModalOpen(true);
-  };
+    setIsCreateModalOpen(true)
+  }
+
+  const handleEditAdmin = (admin: Admin) => {
+    setEditingAdmin(admin)
+  }
 
   const handleSaveAdmin = (adminData: Partial<Admin>) => {
-    console.log('Saving admin:', adminData);
-
     if (editingAdmin) {
-      console.log('Updating existing admin:', editingAdmin.id);
+      // Update existing admin
+      setAdmins((prev) => prev.map((admin) => (admin.id === editingAdmin.id ? { ...admin, ...adminData } : admin)))
+      setEditingAdmin(null)
+      if (selectedAdmin?.id === editingAdmin.id) {
+        setSelectedAdmin({ ...selectedAdmin, ...adminData } as Admin)
+      }
     } else {
-      console.log('Creating new admin');
+      // Create new admin
+      const newAdmin: Admin = {
+        id: Math.max(...admins.map((a) => a.id)) + 1,
+        name: adminData.name || "",
+        email: adminData.email || "",
+        phone: adminData.phone || "",
+        status: adminData.status || "pending",
+        assignedSocieties: adminData.assignedSocieties || [],
+        lastActivity: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        loginCount: 0,
+        ticketsResolved: 0,
+        recentActivities: [],
+      }
+      setAdmins((prev) => [...prev, newAdmin])
+      setIsCreateModalOpen(false)
     }
+  }
 
-    setEditingAdmin(undefined);
-  };
+  const handleDeleteAdmin = (adminId: number) => {
+    setAdmins((prev) => prev.filter((admin) => admin.id !== adminId))
+    if (selectedAdmin && selectedAdmin.id === adminId) {
+      setSelectedAdmin(null)
+    }
+  }
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingAdmin(undefined);
-  };
+  const handleBulkDeleteAdmins = (adminIds: number[]) => {
+    const count = adminIds.length
+    setAdmins((prev) => prev.filter((admin) => !adminIds.includes(admin.id)))
+    if (selectedAdmin && adminIds.includes(selectedAdmin.id)) {
+      setSelectedAdmin(null)
+    }
+    showToast(`Successfully deleted ${count} admin${count > 1 ? "s" : ""}`, "success")
+  }
+
+  const handleToggleStatus = (admin: Admin) => {
+    const newStatus: "active" | "inactive" | "pending" = admin.status === "active" ? "inactive" : "active"
+    const updatedAdmin: Admin = { ...admin, status: newStatus }
+    setAdmins((prev) => prev.map((a) => (a.id === admin.id ? updatedAdmin : a)))
+    if (selectedAdmin?.id === admin.id) {
+      setSelectedAdmin(updatedAdmin)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {
-        currentView === 'list' &&
-        (
-          <AdminListView
-            onViewAdmin={handleViewAdmin}
-            onCreateAdmin={handleCreateAdmin}
-          />
-        )
-      }
+    <div className="flex min-h-screen bg-gray-50">
 
-      {
-        currentView === 'detail' && selectedAdmin &&
-        (
+      <div className="flex-1 flex flex-col">
+        {selectedAdmin ? (
           <AdminDetailView
             admin={selectedAdmin}
             onBack={handleBackToList}
             onEdit={handleEditAdmin}
+            onToggleStatus={handleToggleStatus}
           />
-        )
-      }
+        ) : (
+          <AdminListView
+            admins={admins}
+            onViewAdmin={handleViewAdmin}
+            onCreateAdmin={handleCreateAdmin}
+            onEditAdmin={handleEditAdmin}
+            onDeleteAdmin={handleDeleteAdmin}
+            onBulkDeleteAdmins={handleBulkDeleteAdmins}
+            onToggleStatus={handleToggleStatus}
+          />
+        )}
+      </div>
 
-      <AdminModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        admin={editingAdmin}
+      <EditAdminModal
+        isOpen={isCreateModalOpen || !!editingAdmin}
+        onClose={() => {
+          setIsCreateModalOpen(false)
+          setEditingAdmin(null)
+        }}
         onSave={handleSaveAdmin}
+        admin={editingAdmin}
+        isEditing={!!editingAdmin}
+      />
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
       />
     </div>
-  );
+  )
 }
-
-export default App;

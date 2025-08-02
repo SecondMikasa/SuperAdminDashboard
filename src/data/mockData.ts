@@ -530,7 +530,7 @@ export const mockAdmins: Admin[] = [
   }
 ];
 
-export const allSocieties = [
+export const mockSocieties = [
   { id: 1, name: "Green Valley Residency", unitCount: 245 },
   { id: 2, name: "Sunshine Apartments", unitCount: 180 },
   { id: 3, name: "Oakwood Heights", unitCount: 425 },
