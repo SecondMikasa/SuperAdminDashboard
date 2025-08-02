@@ -246,23 +246,24 @@ export function AdminListView({
   return (
     <div className="flex-1 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-3 sm:space-y-0">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Platform Admins Management</h1>
-          <p className="text-gray-600 mt-1 text-sm sm:text-base">Manage platform administrators and their society assignments</p>
+      <Card className="my-0.5 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-0.5 sm:p-2 space-y-2 sm:space-y-0">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Platform Admins Management</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Manage platform administrators and their society assignments</p>
+          </div>
+          <Button
+            onClick={onCreateAdmin}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 self-start sm:self-auto px-6 py-2.5 text-base"
+          >
+            <Plus className="w-5 h-5 mr-2.5" />
+            <span className="hidden sm:inline">Create New Admin</span>
+            <span className="sm:hidden">Create Admin</span>
+          </Button>
         </div>
-        <Button
-          onClick={onCreateAdmin}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          <span className="hidden sm:inline">Create New Admin</span>
-          <span className="sm:hidden">Create Admin</span>
-        </Button>
-      </div>
+      </Card>
 
       {/* Statistics Cards */}
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100">
           <div className="flex items-center">

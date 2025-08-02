@@ -33,6 +33,7 @@ import {
 } from "./ui/Dropdown-menu"
 
 import { format } from "date-fns"
+import { cn } from '../lib/utils';
 
 
 interface AdminDetailViewProps {
@@ -76,33 +77,43 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
   return (
     <div className="flex-1 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
-        <div className="flex flex-col sm:flex-row sm:items-center">
-          <Button variant="ghost" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-          </Button>
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Platform Admin Details</h1>
-            <p className="text-gray-600 mt-1 text-sm sm:text-base">Comprehensive view of admin profile and activities</p>
+      <Card className="mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 space-y-2 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row sm:items-center">
+            <Button variant="ghost" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+            </Button>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Platform Admin Details</h1>
+              <p className="text-gray-600 text-sm sm:text-base">Comprehensive view of admin profile and activities</p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <Button onClick={() => onEdit(admin)} className="bg-blue-600 hover:bg-blue-700 text-sm sm:text-base">
+              <Edit className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Edit Admin</span>
+              <span className="sm:hidden">Edit</span>
+            </Button>
+            <Button
+              onClick={() => onToggleStatus(admin)}
+              className={cn(
+                "text-sm sm:text-base"
+                ,
+                admin.status === "active" ? "bg-red-600 hover:bg-red-700" : "bg-green-500 hover:bg-green-700"
+              )}
+            >
+              <UserX className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">
+                {admin.status === "active" ? "Disable" : "Enable"}
+              </span>
+              <span className="sm:hidden">
+                {admin.status === "active" ? "Disable" : "Enable"}
+              </span>
+            </Button>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-          <Button onClick={() => onEdit(admin)} className="bg-blue-600 hover:bg-blue-700 text-sm sm:text-base">
-            <Edit className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">Edit Admin</span>
-            <span className="sm:hidden">Edit</span>
-          </Button>
-          <Button variant="destructive" onClick={() => onToggleStatus(admin)} className="bg-red-600 hover:bg-red-700 text-sm sm:text-base">
-            <UserX className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">
-            { admin.status === "active" ? "Disable" : "Enable" }
-            </span>
-            <span className="sm:hidden">
-              { admin.status === "active" ? "Disable" : "Enable" }
-            </span>
-          </Button>
-        </div>
-      </div>
+      </Card>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Profile Section */}
