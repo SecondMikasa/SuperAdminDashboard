@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 
 import {
   Search,
@@ -84,6 +84,8 @@ export function AdminListView({
 
   const [isMobile, setIsMobile] = useState(false)
 
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 1024) // Use lg breakpoint for better mobile experience
@@ -93,6 +95,25 @@ export function AdminListView({
     window.addEventListener("resize", checkIsMobile)
 
     return () => window.removeEventListener("resize", checkIsMobile)
+  }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Check for Ctrl+K or Cmd+K (Mac)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+      }
+
+      // Clear search on Escape
+      if (e.key === 'Escape' && document.activeElement === searchInputRef.current) {
+        searchInputRef.current?.blur()
+        setSearchQuery('')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const filteredAndSortedAdmins = useMemo(() => {
@@ -320,11 +341,16 @@ export function AdminListView({
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
-              placeholder="Search admins by name or email..."
+              ref={searchInputRef}
+              placeholder="Search admins by name or email... (Ctrl+K)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 text-sm sm:text-base"
+              className="pl-10 text-sm sm:text-base pr-24"
             />
+            <kbd className="absolute right-3 top-1/2 transform -translate-y-1/2 hidden sm:inline-flex items-center gap-1 rounded border bg-gray-50 px-2 py-0.5 text-xs text-gray-500">
+              <span className="text-xs">Ctrl</span>
+              <span className="text-xs">K</span>
+            </kbd>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Select

@@ -6,7 +6,6 @@ import { AdminDetailView } from "../src/components/AdminDetailView"
 import { EditAdminModal } from "../src/components/modules/Edit-modal"
 
 import { Toast, useToast } from "../src/components/ui/Toast-notification"
-import { Button } from "../src/components/ui/Button"
 
 import { mockAdmins } from "../src/data/mockData"
 
@@ -17,7 +16,6 @@ export default function PlatformAdminDashboard() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null)
   const [admins, setAdmins] = useState<Admin[]>(mockAdmins)
-  const [showDesignSystem, setShowDesignSystem] = useState(false)
   const { toast, showToast, hideToast } = useToast()
 
   const handleViewAdmin = (admin: Admin) => {
