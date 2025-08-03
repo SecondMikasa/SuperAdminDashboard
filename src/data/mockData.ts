@@ -563,6 +563,8 @@ export const mockSocieties = [
   { id: 30, name: "Grandview Estates", unitCount: 315 }
 ];
 
+export const allSocieties = mockSocieties;
+
 // All recent activities across the platform (20+ activities)
 export const allRecentActivities = [
   {

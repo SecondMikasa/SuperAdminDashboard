@@ -77,7 +77,7 @@ export const AdminModal: React.FC<AdminModalProps> = ({
       return;
     }
 
-    const societiesData = allSocieties.filter(society =>
+    const societiesData = allSocieties.filter((society: { id: number; name: string; unitCount: number }) =>
       formData.assignedSocieties.includes(society.id)
     );
 
@@ -189,7 +189,7 @@ export const AdminModal: React.FC<AdminModalProps> = ({
           </h4>
           <div className="max-h-60 overflow-y-auto border border-gray-200 rounded-lg p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {allSocieties.map((society) => (
+              {allSocieties.map((society: { id: number; name: string; unitCount: number }) => (
                 <label
                   key={society.id}
                   className="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer"
