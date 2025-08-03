@@ -254,11 +254,11 @@ export function AdminListView({
           </div>
           <Button
             onClick={onCreateAdmin}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 self-start sm:self-auto px-6 py-2.5 text-base"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 self-start sm:self-auto px-6 py-2.5 text-base whitespace-nowrap flex-shrink-0"
           >
-            <Plus className="w-5 h-5 mr-2.5" />
+            <Plus className="w-5 h-5 mr-2.5 flex-shrink-0" />
             <span className="hidden sm:inline">Create New Admin</span>
-            <span className="sm:hidden">Create Admin</span>
+            <span className="sm:hidden">Create</span>
           </Button>
         </div>
       </Card>

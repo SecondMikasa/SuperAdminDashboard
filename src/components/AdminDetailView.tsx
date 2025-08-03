@@ -33,8 +33,6 @@ import {
 } from "./ui/Dropdown-menu"
 
 import { format } from "date-fns"
-import { cn } from '../lib/utils';
-
 
 interface AdminDetailViewProps {
   admin: Admin
@@ -80,7 +78,7 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
       <Card className="mb-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 space-y-2 sm:space-y-0">
           <div className="flex flex-col sm:flex-row sm:items-center">
-            <Button variant="ghost" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
+            <Button variant="glass" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
               <ArrowLeft className="w-4 h-4 mr-2" />
             </Button>
             <div>
@@ -89,18 +87,14 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-            <Button onClick={() => onEdit(admin)} className="bg-blue-600 hover:bg-blue-700 text-sm sm:text-base">
+            <Button onClick={() => onEdit(admin)} variant="primary">
               <Edit className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Edit Admin</span>
               <span className="sm:hidden">Edit</span>
             </Button>
             <Button
               onClick={() => onToggleStatus(admin)}
-              className={cn(
-                "text-sm sm:text-base"
-                ,
-                admin.status === "active" ? "bg-red-600 hover:bg-red-700" : "bg-green-500 hover:bg-green-700"
-              )}
+              variant={admin.status === "active" ? "error" : "success"}
             >
               <UserX className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">
@@ -203,7 +197,7 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
           <Card>
             <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <CardTitle className="text-base sm:text-lg">Assigned Societies</CardTitle>
-              <Button variant="outline" size="sm" className="self-start sm:self-auto">
+              <Button variant="glass" size="sm" className="self-start sm:self-auto">
                 <span className="hidden sm:inline">Manage Assignments</span>
                 <span className="sm:hidden">Manage</span>
               </Button>
@@ -224,7 +218,7 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
                       </div>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="flex-shrink-0">
+                          <Button variant="glass" size="sm" className="flex-shrink-0">
                             <MoreHorizontal className="w-4 h-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -244,7 +238,7 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
           <Card>
             <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <CardTitle className="text-base sm:text-lg">Recent Activities</CardTitle>
-              <Button variant="outline" size="sm" className="self-start sm:self-auto">
+              <Button variant="glass" size="sm" className="self-start sm:self-auto">
                 <span className="hidden sm:inline">View All Activities</span>
                 <span className="sm:hidden">View All</span>
               </Button>
