@@ -267,25 +267,31 @@ export function AdminListView({
   return (
     <div className="flex-1 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <Card className="my-0.5 sm:mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-0.5 sm:p-2 space-y-2 sm:space-y-0">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Platform Admins Management</h1>
-            <p className="text-gray-600 text-sm sm:text-base">Manage platform administrators and their society assignments</p>
+      <Card className="mb-4 sm:mb-6">
+        <div className="p-3 sm:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+            <div className="text-center sm:text-left">
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 leading-tight">
+                Platform Admins Management
+              </h1>
+              <p className="text-xs sm:text-sm lg:text-base text-gray-600 mt-0.5">
+                Manage platform administrators and their society assignments
+              </p>
+            </div>
+            <Button
+              onClick={onCreateAdmin}
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base flex items-center justify-center whitespace-nowrap"
+            >
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+              <span className="hidden sm:inline">Create New Admin</span>
+              <span className="sm:hidden">Create Admin</span>
+            </Button>
           </div>
-          <Button
-            onClick={onCreateAdmin}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 self-start sm:self-auto px-6 py-2.5 text-base whitespace-nowrap flex-shrink-0"
-          >
-            <Plus className="w-5 h-5 mr-2.5 flex-shrink-0" />
-            <span className="hidden sm:inline">Create New Admin</span>
-            <span className="sm:hidden">Create</span>
-          </Button>
         </div>
       </Card>
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100">
           <div className="flex items-center">
             <div className="p-3 bg-green-500 rounded-xl">

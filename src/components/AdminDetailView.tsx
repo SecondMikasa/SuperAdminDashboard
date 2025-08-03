@@ -75,35 +75,37 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
   return (
     <div className="flex-1 p-3 sm:p-4 lg:p-6">
       {/* Header */}
-      <Card className="mb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 space-y-2 sm:space-y-0">
-          <div className="flex flex-col sm:flex-row sm:items-center">
-            <Button variant="glass" onClick={onBack} className="self-start sm:mr-4 mb-2 sm:mb-0">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-            </Button>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Platform Admin Details</h1>
-              <p className="text-gray-600 text-sm sm:text-base">Comprehensive view of admin profile and activities</p>
+      <Card className="mb-4 sm:mb-6">
+        <div className="p-3 sm:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+            <div className="flex flex-col items-center sm:flex-row sm:items-center text-center sm:text-left">
+              <Button variant="glass" onClick={onBack} className="mb-2 sm:mb-0 sm:mr-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+              </Button>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">Platform Admin Details</h1>
+                <p className="text-gray-600 text-sm sm:text-base mt-0.5">Comprehensive view of admin profile and activities</p>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-            <Button onClick={() => onEdit(admin)} variant="primary">
-              <Edit className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Edit Admin</span>
-              <span className="sm:hidden">Edit</span>
-            </Button>
-            <Button
-              onClick={() => onToggleStatus(admin)}
-              variant={admin.status === "active" ? "error" : "success"}
-            >
-              <UserX className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">
-                {admin.status === "active" ? "Disable" : "Enable"}
-              </span>
-              <span className="sm:hidden">
-                {admin.status === "active" ? "Disable" : "Enable"}
-              </span>
-            </Button>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+              <Button onClick={() => onEdit(admin)} variant="primary">
+                <Edit className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Edit Admin</span>
+                <span className="sm:hidden">Edit</span>
+              </Button>
+              <Button
+                onClick={() => onToggleStatus(admin)}
+                variant={admin.status === "active" ? "error" : "success"}
+              >
+                <UserX className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">
+                  {admin.status === "active" ? "Disable" : "Enable"}
+                </span>
+                <span className="sm:hidden">
+                  {admin.status === "active" ? "Disable" : "Enable"}
+                </span>
+              </Button>
+            </div>
           </div>
         </div>
       </Card>
@@ -197,7 +199,7 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
           <Card>
             <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <CardTitle className="text-base sm:text-lg">Assigned Societies</CardTitle>
-              <Button variant="glass" size="sm" className="self-start sm:self-auto">
+              <Button variant="outline" size="sm" className="self-start sm:self-auto">
                 <span className="hidden sm:inline">Manage Assignments</span>
                 <span className="sm:hidden">Manage</span>
               </Button>
@@ -238,7 +240,7 @@ export function AdminDetailView({ admin, onBack, onEdit, onToggleStatus }: Admin
           <Card>
             <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
               <CardTitle className="text-base sm:text-lg">Recent Activities</CardTitle>
-              <Button variant="glass" size="sm" className="self-start sm:self-auto">
+              <Button variant="outline" size="sm" className="self-start sm:self-auto">
                 <span className="hidden sm:inline">View All Activities</span>
                 <span className="sm:hidden">View All</span>
               </Button>
